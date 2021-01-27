@@ -5,7 +5,10 @@ public class Message {
 	private byte[] payload;
 
 	public Message(byte[] payload) {
-		this.payload = payload; // TODO: check for length within boundary
+		// TODO: check for length within boundary
+		if (payload.length < MessageConfig.SEGMENTSIZE) {
+			this.payload = payload;
+		}
 	}
 
 	public Message() {
