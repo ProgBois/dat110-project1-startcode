@@ -3,13 +3,7 @@ package no.hvl.dat110;
 public class TODO {
 
 	public static String method() {
-		//kommentar12
-<<<<<<< HEAD
-		//GainzCity
-		// plz funk
-=======
-		//Hallaao
->>>>>>> branch 'master' of https://github.com/ProgBois/dat110-project1-startcode.git
+
 		String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
 		
 		return "Metoden " + methodName + " er ikke implementert";
