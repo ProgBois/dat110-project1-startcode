@@ -46,9 +46,19 @@ public class RPCServer {
 		   // - invoke the method
 		   // - send back message containing RPC reply
 			
-		   if (true) {
-			   throw new UnsupportedOperationException(TODO.method());
-		   }
+		   Message recMsg = connection.receive();
+		   byte[] b = recMsg.getData();
+		   rpcid = b[0];
+		   
+		   //finne metoden "to be invoked" vha hashmappen
+		   RPCImpl fm = services.get(rpcid);
+		   
+		   //Invoka metoden
+		   byte[] invmet = fm.invoke(b);
+		   
+		   //sende message tilbake med RPC reply
+		   Message respMsg = new Message(invmet);
+		   connection.send(respMsg);
 		   
 		   if (rpcid == RPCCommon.RPIDSTOP) {
 			   stop = true;

@@ -3,8 +3,6 @@ package no.hvl.dat110;
 public class TODO {
 
 	public static String method() {
-		//kommentar12
-		//GainzCity
 		String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
 		
 		return "Metoden " + methodName + " er ikke implementert";

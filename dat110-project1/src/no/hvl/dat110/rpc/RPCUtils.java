@@ -1,6 +1,10 @@
 package no.hvl.dat110.rpc;
 
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+
+import javax.swing.text.WrappedPlainView;
 
 import no.hvl.dat110.TODO;
 
@@ -16,10 +20,14 @@ public class RPCUtils {
 		byte[] encoded;
 
 		// TODO: marshall RPC identifier and string into byte array
-
-		if (true) {
-			throw new UnsupportedOperationException(TODO.method());
+		encoded = new byte[str.getBytes().length+1];
+		encoded[0] = rpcid;
+		
+		//Konvertera String til byte[]
+		for(int i = 1; i < encoded.length; i++) {
+			encoded[i] = str.getBytes()[i-1];
 		}
+
 
 		return encoded;
 	}
@@ -30,9 +38,10 @@ public class RPCUtils {
 
 		// TODO: unmarshall String contained in data into decoded
 
-		if (true) {
-			throw new UnsupportedOperationException(TODO.method());
-		}
+		/* copyOfRange(byte[] original, int from, int to)
+		Copies the specified range of the specified array into a new array. (finn i Arrays API) */
+		decoded = new String(Arrays.copyOfRange(data, 1, data.length));
+		
 
 		return decoded;
 	}
@@ -43,9 +52,8 @@ public class RPCUtils {
 
 		// TODO: marshall RPC identifier in case of void type
 
-		if (true) {
-			throw new UnsupportedOperationException(TODO.method());
-		}
+		encoded = new byte[1];
+		encoded[0] = rpcid;
 
 		return encoded;
 
@@ -54,6 +62,8 @@ public class RPCUtils {
 	public static void unmarshallVoid(byte[] data) {
 
 		// TODO: unmarshall void type
+		return; //funke uten med
+		
 	}
 
 	public static byte[] marshallBoolean(byte rpcid, boolean b) {
@@ -82,10 +92,18 @@ public class RPCUtils {
 		byte[] encoded;
 
 		// TODO: marshall RPC identifier and string into byte array
-
-		if (true) {
-			throw new UnsupportedOperationException(TODO.method());
+		
+		//En integer i java er 4 bytes.
+		encoded = new byte[5]; //1 byte til rpcid og 4 til int
+		encoded[0] = rpcid;
+		
+		//allocate(int capacity) som er 4 i dette tilfelle.
+		byte[] intTb = ByteBuffer.allocate(4).putInt(x).array();
+		
+		for(int i = 1; i < encoded.length; i++) {
+			encoded[i] = intTb[i-1];
 		}
+
 
 		return encoded;
 	}
@@ -96,9 +114,8 @@ public class RPCUtils {
 
 		// TODO: unmarshall integer contained in data
 
-		if (true) {
-			throw new UnsupportedOperationException(TODO.method());
-		}
+		//https://javadeveloperzone.com/java-basic/java-convert-int-to-byte-array/
+		decoded = ByteBuffer.wrap(Arrays.copyOfRange(data, 1, data.length)).getInt();
 
 		return decoded;
 
